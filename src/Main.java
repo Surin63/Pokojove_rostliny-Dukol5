@@ -11,7 +11,14 @@ public class Main {
                 3);
         System.out.println(plant1);
 
+        PlantList plants = new PlantList();
+        plants.addPlant(plant1);
+        plants.addPlant(new Plant("Karafiat", "Mame ji v pokoji", LocalDate.now(), LocalDate.now().plusDays(6), 3 ));
+        plants.addPlant(plant1);
+        System.out.println(plants);
+
     }
+
 
 
 

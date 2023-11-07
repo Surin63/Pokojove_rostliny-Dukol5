@@ -92,7 +92,7 @@ public class Plant {
                 notes + '\'' +
                 " planted: " + planted +
                 " watering: " + watering +
-                " frequencyOfWatering: " + frequencyOfWatering;
+                " frequencyOfWatering: " + frequencyOfWatering + " dny";
     }
 }
 
