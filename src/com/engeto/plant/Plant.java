@@ -40,6 +40,7 @@ public class Plant {
 
     }
 
+
     public String getName() {
         return name;
     }
@@ -70,7 +71,7 @@ public class Plant {
 
     public void setWatering(LocalDate watering) throws PlantException{
         if (watering.isBefore(planted)) {
-            throw new PlantException("Posledni zalivka nesmi bzt starsi nez zasazeni rostliny - zadano: "+watering);
+            throw new PlantException("Posledni zalivka nesmi byt starsi nez zasazeni rostliny - zadano: "+watering);
         }
     }
 
@@ -94,6 +95,11 @@ public class Plant {
                 " watering: " + watering +
                 " frequencyOfWatering: " + frequencyOfWatering + " dny";
     }
+
+
+
+
+
 }
 
 

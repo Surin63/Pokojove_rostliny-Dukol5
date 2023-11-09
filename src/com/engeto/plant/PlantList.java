@@ -10,14 +10,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class PlantList {
-    private static List<Plant> plants;
-
-    public PlantList() {plants = new ArrayList<>();}
-    public static void addPlant(Plant plant){
-        plants.add(plant);
-    }
-
+public class PlantList extends Plant {
+    private List<Plant> plants = new ArrayList<>();
+    public PlantList(){};
 
 
 
@@ -26,7 +21,7 @@ public class PlantList {
             return "Name of Plant: " + plant.getName() + " " + plant.getWatering() + " " + plant.getFrequencyOfWatering();
         return null;
     }
-    public static Plant loadFromfile(String fileName) throws PlantException {
+    public static Plant loadFromFile(String fileName) throws PlantException {
         Plant result = new Plant();
         int lineNumber = 1;
 
@@ -44,34 +39,45 @@ public class PlantList {
     private static void parseLine(String line, Plant plant, int lineNumber) throws PlantException{
         String[] blocks = line.split(Settings.fileItemDelimiter());
         int numOfBlocks = blocks.length;
-        if(numOfBlocks !=3) {
+        if(numOfBlocks !=4) {
             throw new PlantException(
                     "Nespravny pocet polozek na radku: " +line+
                             "! Pocet polozek: "+numOfBlocks+".");
         }
         String name = blocks[0].trim();
         String notes = blocks[1].trim();
-        LocalDate.parse(blocks[2].trim());
-        LocalDate.parse(blocks[3].trim());
-        Integer.parseInt(blocks[4].trim());
-        BigDecimal price;
+        LocalDate dateOfPlanted = LocalDate.parse(blocks[3].trim());
+        LocalDate dateOfWatering = LocalDate.parse(blocks[4].trim());
+        int frequencyOfWatering = 0;
         try {
-            price = new BigDecimal(blocks[1].trim());
+            frequencyOfWatering = Integer.parseInt(blocks[2].trim());
         }catch (NumberFormatException e) {
-            throw new PlantException("Chybe zadane cislo "+blocks[1]+" na radku c. "+lineNumber+": "+line+"!");
+            throw new PlantException("Neplatny format frekvence zavlazovani v souboru.");
         }
 
-        Plant newPlant = new Plant(name, notes, category);
-        plant.addPlant(newPlant);
+            Plant newPlant = new Plant(name, notes, dateOfPlanted, dateOfWatering, frequencyOfWatering);
+
+
 
     }
 
-
+    public void addPlant(Plant newPlant) {plants.add(newPlant);}
+    public void removePlant(int index) {
+        plants.remove(index);
+    }
     public Plant getPlant(int index) {return plants.get(index);}
-    public void removePlant(int index) {plants.remove(index);}
-    public List<Plant> getPlantList() {return plants;}
-    public void addAllPlant(List<Plant> plantNewList) {this.plants.addAll(plantNewList);}
-    public void setPlantList(List<Plant> plantList) {this.plants = plantList;}
+    public List<Plant> getPlants(){
+        return new ArrayList<>(plants);
+    }
+    public void addAllPlant(List<Plant> listOfNewPlants) {
+        this.plants = new ArrayList<>(listOfNewPlants);
+    }
+    public void replaceAllPlant(List<Plant> listOfNewPlants) {
+        this.plants = new ArrayList<>(listOfNewPlants);
+    }
+    public Plant get(int index) {
+        return plants.get(index);
+    }
 
 }
 

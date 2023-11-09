@@ -1,21 +1,23 @@
 import com.engeto.plant.Plant;
+import com.engeto.plant.PlantException;
 import com.engeto.plant.PlantList;
+import com.engeto.plant.Settings;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Plant plant1 = new Plant("Karafiat", "Mame ji v pokoji", LocalDate.now(), LocalDate.now().plusDays(6),
-                3);
-        System.out.println(plant1);
-
-        PlantList plants = new PlantList();
-        plants.addPlant(plant1);
-        plants.addPlant(new Plant("Karafiat", "Mame ji v pokoji", LocalDate.now(), LocalDate.now().plusDays(6), 3 ));
-        plants.addPlant(plant1);
-        System.out.println(plants);
+       PlantList listOfPlants = new PlantList();
+       try {
+            listOfPlants = (PlantList) PlantList.loadFromFile(Settings.defaultFileName());
+            System.out.println(listOfPlants.getPlants());
+        } catch (PlantException e) {
+            System.err.println("Chyba pri cteni ze souboru: "+e.getLocalizedMessage());
+        }
+       listOfPlants.addPlant(new Plant("Karafiat", LocalDate.now()));
 
     }
 
