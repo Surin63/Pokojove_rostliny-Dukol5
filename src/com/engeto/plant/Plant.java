@@ -2,6 +2,7 @@ package com.engeto.plant;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Plant {
@@ -89,12 +90,15 @@ public class Plant {
     @Override
     public String toString() {
         return
-                 name +" "+ '\'' +
+                "\n"+ name +" "+ '\'' +
                 notes + '\'' +
                 " planted: " + planted +
                 " watering: " + watering +
                 " frequencyOfWatering: " + frequencyOfWatering + " dny";
     }
+
+    @Override
+    public int compareTo(Plant plant) {return this.name.compareTo(plant.getName());}
 
 
 
