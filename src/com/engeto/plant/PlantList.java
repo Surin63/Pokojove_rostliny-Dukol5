@@ -1,6 +1,7 @@
 package com.engeto.plant;
 
 import java.io.*;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +13,11 @@ public class PlantList {
 
 
 
-    public String getWateringInfo() {
-        for (Plant plant : plants)
-            return  plant.getName() + " " + plant.getWatering() + " " + plant.getFrequencyOfWatering();
-        return null;
+    public void getWateringInfo() {
+        for (Plant plant : plants) {
+            System.out.println(plant.getName() + " " + plant.getWatering() + " " + plant.getFrequencyOfWatering());
+        }
+
     }
     public static PlantList loadFromFile(String fileName) throws PlantException {
         PlantList result = new PlantList();
@@ -44,15 +46,15 @@ public class PlantList {
         String notes = blocks[1].trim();
         LocalDate dateOfPlanted = LocalDate.parse(blocks[3].trim());
         LocalDate dateOfWatering = LocalDate.parse(blocks[4].trim());
-        int frequencyOfWatering = 0;
         try {
-            frequencyOfWatering = Integer.parseInt(blocks[2].trim());
-        }catch (NumberFormatException e) {
-            throw new PlantException("Neplatny format frekvence zavlazovani v souboru.");
-        }
-
+            int frequencyOfWatering = Integer.parseInt(blocks[2].trim());
             Plant newPlant = new Plant(name, notes, dateOfPlanted, dateOfWatering, frequencyOfWatering);
             plantList.addPlant(newPlant);
+        }catch (PlantException e) {
+            System.err.println(e.getLocalizedMessage());
+        } catch (NumberFormatException e){
+            System.err.println("Neplatny format frekvence zavlazovani v souboru.");
+        }
     }
     public static void saveToFile(String filename,PlantList plantList ) throws PlantException {
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(filename)))) {

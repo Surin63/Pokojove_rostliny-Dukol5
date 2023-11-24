@@ -1,9 +1,6 @@
 package com.engeto.plant;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class Plant {
     private String name;
@@ -13,28 +10,20 @@ public class Plant {
     private int frequencyOfWatering;
 
 
-    public Plant(String name, String notes, LocalDate planted, LocalDate watering, int frequencyOfWatering) {
+    public Plant(String name, String notes, LocalDate planted, LocalDate watering, int frequencyOfWatering) throws PlantException {
         this.name = name;
         this.notes = notes;
         this.planted = planted;
-        this.watering = watering;
-        this.frequencyOfWatering = frequencyOfWatering;
+        setWatering(watering);
+        setFrequencyOfWatering(frequencyOfWatering);
     }
 
-    public Plant(String name, LocalDate planted, int frequencyOfWatering) {
-        this.name = name;
-        this.notes = " ";
-        this.planted = planted;
-        this.watering = LocalDate.now();
-        this.frequencyOfWatering = frequencyOfWatering;
+    public Plant(String name, LocalDate planted, int frequencyOfWatering) throws PlantException {
+        this(name, " ", planted, LocalDate.now(), frequencyOfWatering);
     }
 
-    public Plant(String name, LocalDate watering) {
-        this.name = name;
-        this.notes = " ";
-        this.planted = LocalDate.now();
-        this.watering = watering;
-        this.frequencyOfWatering = 7;
+    public Plant(String name) throws PlantException {
+        this(name, " ", LocalDate.now(), LocalDate.now(), 7);
     }
 
     public Plant() {
@@ -70,10 +59,11 @@ public class Plant {
         return watering;
     }
 
-    public void setWatering(LocalDate watering) throws PlantException{
+    public void setWatering(LocalDate watering) throws PlantException {
         if (watering.isBefore(planted)) {
-            throw new PlantException("Posledni zalivka nesmi byt starsi nez zasazeni rostliny - zadano: "+watering);
+            throw new PlantException("Posledni zalivka nesmi byt starsi nez zasazeni rostliny - zadano: " + watering);
         }
+        this.watering = watering;
     }
 
     public int getFrequencyOfWatering() {
@@ -82,7 +72,7 @@ public class Plant {
 
     public void setFrequencyOfWatering(int frequencyOfWatering) throws PlantException {
         if (frequencyOfWatering <= 0) {
-            throw new PlantException("Frekvence zalivky nesmi byt 0 nebo zaporne cislo - zadane: "+frequencyOfWatering+" dnu.");
+            throw new PlantException("Frekvence zalivky nesmi byt 0 nebo zaporne cislo - zadane: " + frequencyOfWatering + " dnu.");
         }
         this.frequencyOfWatering = frequencyOfWatering;
     }
@@ -90,20 +80,12 @@ public class Plant {
     @Override
     public String toString() {
         return
-                "\n"+ name +" "+ '\'' +
-                notes + '\'' +
-                " planted: " + planted +
-                " watering: " + watering +
-                " frequencyOfWatering: " + frequencyOfWatering + " dny";
+                "\n" + name + " " + '\'' +
+                        notes + '\'' +
+                        " planted: " + planted +
+                        " watering: " + watering +
+                        " frequencyOfWatering: " + frequencyOfWatering + " dny";
     }
-
-    @Override
-    public int compareTo(Plant plant) {return this.name.compareTo(plant.getName());}
-
-
-
-
-
 }
 
 
