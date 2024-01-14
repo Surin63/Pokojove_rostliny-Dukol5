@@ -26,9 +26,7 @@ public class Plant {
         this(name, " ", LocalDate.now(), LocalDate.now(), 7);
     }
 
-    public Plant() {
 
-    }
 
 
     public String getName() {

@@ -1,8 +1,8 @@
 package com.engeto.plant;
 
 public class Settings {
-    private static String fileItemDelimiterValue= ";";
-    private static String defaultFileNameValue = "kvetiny.txt";
+    private static final String fileItemDelimiterValue= "\t";
+    private static final String defaultFileNameValue = "kvetiny.txt";
     public static String fileItemDelimiter(){
         return fileItemDelimiterValue;
     }

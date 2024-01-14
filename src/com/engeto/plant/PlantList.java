@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class PlantList {
     private List<Plant> plants = new ArrayList<>();
-    public PlantList(){};
+
 
 
 
@@ -36,16 +36,16 @@ public class PlantList {
     }
     private static void parseLine(String line, PlantList plantList, int lineNumber) throws PlantException{
         String[] blocks = line.split(Settings.fileItemDelimiter());
-        int numOfBlocks = blocks.length;
-        if(numOfBlocks !=5) {
+
+        if(blocks.length !=5) {
             throw new PlantException(
                     "Nespravny pocet polozek na radku: " +line+
-                            "! Pocet polozek: "+numOfBlocks+".");
+                            "! Pocet polozek: "+blocks.length+".");
         }
         String name = blocks[0].trim();
         String notes = blocks[1].trim();
-        LocalDate dateOfPlanted = LocalDate.parse(blocks[3].trim());
-        LocalDate dateOfWatering = LocalDate.parse(blocks[4].trim());
+        LocalDate dateOfPlanted = LocalDate.parse(blocks[4].trim());
+        LocalDate dateOfWatering = LocalDate.parse(blocks[3].trim());
         try {
             int frequencyOfWatering = Integer.parseInt(blocks[2].trim());
             Plant newPlant = new Plant(name, notes, dateOfPlanted, dateOfWatering, frequencyOfWatering);
